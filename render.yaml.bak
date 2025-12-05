@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: clone-backend
+    env: node
+    repo: https://github.com/catwingwan/clone_api
+    branch: main
+    root: api
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  - type: static
+    name: clone-web
+    env: static
+    repo: https://github.com/catwingwan/clone_api
+    branch: main
+    root: web
+    buildCommand: npm ci && npm run build
+    publishPath: web/dist
+
+databases:
+  - name: clone-db
+    engine: postgres
+    plan: starter

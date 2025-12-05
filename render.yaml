@@ -1,27 +1,27 @@
 services:
+  # ============================
+  # Backend (API) Service
+  # ============================
   - type: web
-    name: clone-backend
-    env: node
-    repo: https://github.com/catwingwan/clone_api
-    branch: main
-    root: api
-    buildCommand: npm ci && npm run build
-    startCommand: npm run start
-    healthCheckPath: /health
-    envVars:
-      - key: NODE_ENV
-        value: production
+    name: my-clone-api
+    env: docker
+    plan: free
+    region: singapore
+    rootDir: api
+    dockerfilePath: api/Dockerfile
+    autoDeploy: true
 
-  - type: static
-    name: clone-web
-    env: static
-    repo: https://github.com/catwingwan/clone_api
-    branch: main
-    root: web
-    buildCommand: npm ci && npm run build
-    publishPath: web/dist
-
-databases:
-  - name: clone-db
-    engine: postgres
-    plan: starter
+  # ============================
+  # Frontend (Vite Web App)
+  # ============================
+  - type: web
+    name: my-clone-web
+    env: docker
+    plan: free
+    region: singapore
+    rootDir: web
+    dockerfilePath: web/Dockerfile
+    autoDeploy: true
+    # For frontend you must also set routes
+    buildCommand: ""
+    startCommand: ""
